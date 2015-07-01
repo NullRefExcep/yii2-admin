@@ -12,5 +12,10 @@
         "psr-4": {
             "nullref\\admin\\": "src/"
         }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "php yii module/install admin"
+        ]
     }
 }
