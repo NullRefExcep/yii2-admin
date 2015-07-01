@@ -18,6 +18,7 @@ use yii\web\IdentityInterface;
  * @property string $firstName
  * @property string $lastName
  * @property integer $status
+ * @property integer $role
  * @property string $passwordHash
  * @property string $passwordResetToken
  * @property integer $passwordResetExpire
@@ -117,7 +118,7 @@ class Admin extends ActiveRecord implements IdentityInterface
         return [
             [['passwordHash', 'password'], 'safe'],
             [['email'], 'required'],
-            [['status', 'passwordResetExpire', 'createdAt', 'updatedAt'], 'integer'],
+            [['status', 'passwordResetExpire', 'createdAt', 'updatedAt', 'role'], 'integer'],
             [['email', 'firstName', 'lastName', 'passwordResetToken', 'emailConfirmToken'], 'string', 'max' => 255],
             [['authKey'], 'string', 'max' => 32]
         ];

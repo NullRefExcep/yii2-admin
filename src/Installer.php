@@ -29,6 +29,7 @@ class Installer extends ModuleInstaller
                 'email' => Schema::TYPE_STRING . ' NOT NULL',
                 'firstName' => Schema::TYPE_STRING . ' NULL',
                 'lastName' => Schema::TYPE_STRING . ' NULL',
+                'role' => Schema::TYPE_INTEGER,
                 'status' => Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT 0',
                 'passwordHash' => Schema::TYPE_STRING . ' NOT NULL',
                 'passwordResetToken' => Schema::TYPE_STRING . ' NULL DEFAULT NULL',
