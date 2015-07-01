@@ -12,6 +12,11 @@ use yii\db\Schema;
 
 class Installer extends ModuleInstaller
 {
+    public function getModuleId()
+    {
+        return 'admin';
+    }
+
     protected $tableName = '{{%admin}}';
 
     /**
@@ -50,7 +55,7 @@ class Installer extends ModuleInstaller
     public function uninstall()
     {
         if ($this->tableExist($this->tableName)) {
-            $this->dropTable('{{%product}}');
+            $this->dropTable($this->tableName);
         }
         parent::uninstall();
     }
