@@ -1,6 +1,5 @@
 <?php
-use nullref\core\widgets\Menu;
-use rmrevin\yii\fontawesome\FA;
+use nullref\admin\widgets\Menu;
 use yii\helpers\Url;
 
 /** @var $this \yii\web\View */
@@ -40,10 +39,10 @@ use yii\helpers\Url;
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <?= Menu::widget([
             'items' => [
-                ['label' => FA::icon('dashboard') . ' ' . Yii::t('admin', 'Dashboard'), 'url' => ['/admin/default']],
-                ['label' => FA::icon('users') . ' ' . Yii::t('admin', 'Users'), 'items' => [
-                    ['label' => FA::icon('user') . ' ' . Yii::t('admin', 'Clients'), 'url' => ['/admin/users/user']],
-                    ['label' => FA::icon('user') . ' ' . Yii::t('admin', 'Admins'), 'url' => ['/admin/users/admin']],
+                ['label' => Yii::t('admin', 'Dashboard'), 'url' => ['/admin/default']],
+                ['label' => Yii::t('admin', 'Users'), 'items' => [
+                    ['label' => Yii::t('admin', 'Clients'), 'url' => ['/admin/users/user']],
+                    ['label' => Yii::t('admin', 'Admins'), 'url' => ['/admin/users/admin']],
                 ]],
             ],
         ]) ?>
