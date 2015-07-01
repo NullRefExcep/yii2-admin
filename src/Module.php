@@ -18,6 +18,8 @@ class Module extends BaseModule implements BootstrapInterface
 
     public $adminModelClass = 'nullref\admin\models\Admin';
 
+    public $controllerNamespace = 'nullref\admin\controllers';
+
     /**
      * Bootstrap method to be called during application bootstrap stage.
      * @param Application $app the application currently running
