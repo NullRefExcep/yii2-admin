@@ -1,5 +1,11 @@
 <?php
+
+use yii\bootstrap\ActiveForm;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+
 /** @var $this \yii\web\View */
+/** @var $model \nullref\admin\models\LoginForm */
 ?>
 <div class="main-login">
     <div class="container">
@@ -10,24 +16,32 @@
                         <h3 class="panel-title">Please Sign In</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form">
-                            <fieldset>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="E-mail" name="email" type="email"
-                                           autofocus="">
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password"
-                                           value="">
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
-                                    </label>
-                                </div>
-                                <a href="#" class="btn btn-lg btn-success btn-block">Login</a>
-                            </fieldset>
-                        </form>
+                        <?php $form = ActiveForm::begin(); ?>
+                        <fieldset>
+
+                            <?= $form->field($model, 'email', [
+                                'template' => '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>{input}</div>{hint}{error}'
+                            ])->textInput([
+                                'placeholder' => ArrayHelper::getValue($model->attributeLabels(), 'email')
+                            ]); ?>
+
+                            <?= $form->field($model, 'password', [
+                                'template' => '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>{input}</div>{hint}{error}'
+                            ])->passwordInput([
+                                'placeholder' => ArrayHelper::getValue($model->attributeLabels(), 'password')
+                            ]); ?>
+
+                            <?= $form->field($model, 'rememberMe', [
+                                'template' => '<div class="checkbox"><label>{input}</label></div>'
+                            ])->checkbox() ?>
+
+
+                            <div class="form-group">
+                                <?= Html::submitButton(Yii::t('admin', 'Sign in'),
+                                    ['class' => 'btn btn-lg btn-primary btn-block']) ?>
+                            </div>
+                        </fieldset>
+                        <?php ActiveForm::end() ?>
                     </div>
                 </div>
             </div>

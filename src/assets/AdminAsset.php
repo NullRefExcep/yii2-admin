@@ -20,6 +20,6 @@ class AdminAsset extends AssetBundle
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\web\YiiAsset',
+        'nullref\sbadmin\assets\SBAdminAsset',
     ];
 } 
