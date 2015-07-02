@@ -8,7 +8,9 @@ namespace nullref\admin;
 
 
 use nullref\core\components\ModuleInstaller;
+use Yii;
 use yii\db\Schema;
+use yii\helpers\FileHelper;
 
 class Installer extends ModuleInstaller
 {
@@ -45,7 +47,10 @@ class Installer extends ModuleInstaller
                 'emailConfirmToken' => Schema::TYPE_STRING . ' NULL DEFAULT NULL',
             ], $tableOptions);
         }
-
+        FileHelper::createDirectory(Yii::getAlias('@webroot/css/admin'));
+        FileHelper::createDirectory(Yii::getAlias('@webroot/js/admin'));
+        $this->createFile('@webroot/css/admin/main.css', false);
+        $this->createFile('@webroot/js/admin/scripts.js', false);
         parent::install();
     }
 
@@ -57,8 +62,8 @@ class Installer extends ModuleInstaller
         if ($this->tableExist($this->tableName)) {
             $this->dropTable($this->tableName);
         }
+        $this->deleteFile('@webroot/css/admin/main.css');
+        $this->deleteFile('@webroot/js/admin/scripts.js');
         parent::uninstall();
     }
-
-
 } 
