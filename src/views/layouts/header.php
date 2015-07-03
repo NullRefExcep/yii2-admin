@@ -1,5 +1,7 @@
 <?php
+
 use nullref\admin\widgets\Menu;
+use yii\helpers\Url;
 
 /** @var $this \yii\web\View */
 ?>
@@ -12,7 +14,7 @@ use nullref\admin\widgets\Menu;
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+    <a class="navbar-brand" href="<?= Url::to(['/admin/main']) ?>"><?= Yii::$app->name ?></a>
 </div>
 <!-- /.navbar-header -->
 
