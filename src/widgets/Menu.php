@@ -1,6 +1,7 @@
 <?php
 namespace nullref\admin\widgets;
 
+use nullref\admin\components\IMenuBuilder;
 use nullref\core\interfaces\IAdminModule;
 use nullref\sbadmin\widgets\MetisMenu;
 use Yii;
@@ -12,23 +13,34 @@ use yii\base\Widget;
  */
 class Menu extends Widget
 {
-    public function run()
+    protected $items = [];
+
+    public function init()
     {
+        parent::init();
+
         $methodName = 'getAdminMenu';
-        $items = [];
-        foreach (Yii::$app->modules as $module) {
+        foreach (Yii::$app->modules as $id => $module) {
             if ($module instanceof IAdminModule) {
-                $items[] = $module::getAdminMenu();
+                $this->items[$id] = $module::getAdminMenu();
             } elseif (is_array($module) && isset($module['class'])) {
                 $class = $module['class'];
                 $reflection = new \ReflectionMethod($class, $methodName);
                 if ($reflection->isStatic() && $reflection->isPublic()) {
-                    $items[] = call_user_func(array($class, $methodName));
+                    $this->items[$id] = call_user_func(array($class, $methodName));
                 }
             }
         }
+        /** @var $builder IMenuBuilder */
+        if (($builder = Yii::$app->getModule('admin')->get('menuBuilder', false)) !== null) {
+            $this->items = $builder->build($this->items);
+        }
+    }
 
-        return MetisMenu::widget(['items' => $items]);
+    public function run()
+    {
+
+        return MetisMenu::widget(['items' => $this->items]);
     }
 
 } 

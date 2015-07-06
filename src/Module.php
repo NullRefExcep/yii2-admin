@@ -2,8 +2,10 @@
 
 namespace nullref\admin;
 
+use nullref\admin\components\IMenuBuilder;
 use nullref\core\interfaces\IAdminModule;
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\base\Module as BaseModule;
 
 /**
@@ -35,6 +37,9 @@ class Module extends BaseModule implements IAdminModule
             'identityClass' => $this->adminModelClass,
         ]]);
         $this->setLayoutPath('@vendor/nullref/yii2-admin/src/views/layouts');
+        if ((($builder = $this->get('menuBuilder', false)) !== null) && (!($builder instanceof IMenuBuilder))) {
+            throw new InvalidConfigException('Menu builder must implement IMenuBuilder interface');
+        }
     }
 
 }
