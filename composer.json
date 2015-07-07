@@ -14,5 +14,8 @@
         "psr-4": {
             "nullref\\admin\\": "src/"
         }
+    },
+    "extra": {
+        "bootstrap":"nullref\\admin\\Bootstrap"
     }
 }

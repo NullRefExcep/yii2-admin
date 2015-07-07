@@ -44,6 +44,14 @@ class Installer extends ModuleInstaller
                 'authKey' => Schema::TYPE_STRING . '(32) NULL DEFAULT NULL',
                 'emailConfirmToken' => Schema::TYPE_STRING . ' NULL DEFAULT NULL',
             ], $tableOptions);
+
+            $data = [
+                'email' => 'admin@test.com',
+                'passwordHash' => \Yii::$app->security->generatePasswordHash('password'),
+                'createdAt' => time(),
+                'updatedAt' => time(),
+            ];
+            $this->db->createCommand()->insert($this->tableName, $data)->execute();
         }
 
         parent::install();

@@ -153,4 +153,9 @@ class Admin extends ActiveRecord implements IdentityInterface
             'emailConfirmToken' => Yii::t('user', 'Email Confirm Token'),
         ];
     }
+
+    public static function findByEmail($email)
+    {
+        return static::find()->where(['email'=>$email])->one();
+    }
 }

@@ -35,6 +35,7 @@ class Module extends BaseModule implements IAdminModule
         \Yii::$app->setComponents(['admin' => [
             'class' => 'yii\web\User',
             'identityClass' => $this->adminModelClass,
+            'loginUrl' => ['admin/login'],
         ]]);
         $this->setLayoutPath('@vendor/nullref/yii2-admin/src/views/layouts');
         if ((($builder = $this->get('menuBuilder', false)) !== null) && (!($builder instanceof IMenuBuilder))) {

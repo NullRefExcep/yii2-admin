@@ -227,7 +227,11 @@ use yii\helpers\Url;
         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
         </li>
         <li class="divider"></li>
-        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+        <li>
+            <a href="<?= Url::to(['/admin/logout']) ?>">
+                <i class="fa fa-sign-out fa-fw"></i>
+                <?= Yii::t('admin', 'Logout') ?>
+            </a>
         </li>
     </ul>
     <!-- /.dropdown-user -->

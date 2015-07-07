@@ -4,6 +4,8 @@ namespace nullref\admin\components;
 
 use nullref\admin\Module;
 use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 
 /**
@@ -12,6 +14,30 @@ use yii\web\Controller;
  */
 class AdminController extends Controller
 {
+    public function behaviors()
+    {
+        return array_merge(parent::behaviors(),[
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+
+            'access' => [
+                'user' => 'admin',
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => [],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ]);
+    }
+
     public function init()
     {
         /** @var Module $module */
