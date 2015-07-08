@@ -74,7 +74,7 @@ class LoginForm extends Model
     {
         /** @var Module $module */
         $module = Yii::$app->getModule('admin');
-        $class = $module->adminModelClass;
+        $class = $module->adminModel;
         if ($this->_user === false) {
             $this->_user = call_user_func(array($class, 'findByEmail'), [$this->email]);
         }
