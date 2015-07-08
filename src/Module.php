@@ -14,6 +14,12 @@ use yii\base\Module as BaseModule;
  */
 class Module extends BaseModule implements IAdminModule
 {
+    public $layout = 'main';
+
+    public $defaultRoute = 'main';
+
+    public $adminModel = 'nullref\admin\models\Admin';
+
     public static function getAdminMenu()
     {
         return [
@@ -23,20 +29,9 @@ class Module extends BaseModule implements IAdminModule
         ];
     }
 
-    public $layout = 'main';
-
-    public $defaultRoute = 'main';
-
-    public $adminModelClass = 'nullref\admin\models\Admin';
-
     public function init()
     {
         parent::init();
-        \Yii::$app->setComponents(['admin' => [
-            'class' => 'yii\web\User',
-            'identityClass' => $this->adminModelClass,
-            'loginUrl' => ['admin/login'],
-        ]]);
         $this->setLayoutPath('@vendor/nullref/yii2-admin/src/views/layouts');
         if ((($builder = $this->get('menuBuilder', false)) !== null) && (!($builder instanceof IMenuBuilder))) {
             throw new InvalidConfigException('Menu builder must implement IMenuBuilder interface');

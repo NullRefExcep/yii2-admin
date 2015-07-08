@@ -18,6 +18,16 @@ class Bootstrap implements BootstrapInterface
     public function bootstrap($app)
     {
         if ($app instanceof WebApplication) {
+            $class = 'nullref\admin\models\Admin';
+            if (($module = $app->getModule('admin'))) {
+                /** @var Module $module */
+                $class = $module->adminModel;
+            }
+            \Yii::$app->setComponents(['admin' => [
+                'class' => 'yii\web\User',
+                'identityClass' => $class,
+                'loginUrl' => ['admin/login'],
+            ]]);
             $app->urlManager->addRules(['/admin/login' => '/admin/main/login']);
             $app->urlManager->addRules(['/admin/logout' => '/admin/main/logout']);
         }
