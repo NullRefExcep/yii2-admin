@@ -19,12 +19,15 @@ class Bootstrap implements BootstrapInterface
     {
         if ($app instanceof WebApplication) {
             $class = 'nullref\admin\models\Admin';
-            if (($module = $app->getModule('admin'))) {
+            if (($module = $app->getModule('admin'))!==null) {
                 /** @var Module $module */
                 $class = $module->adminModel;
+                if($module->enableRbac){
+                    $module->setComponents([$module->authManager]);
+                }
             }
             \Yii::$app->setComponents(['admin' => [
-                'class' => 'yii\web\User',
+                'class' => 'nullref\admin\components\User',
                 'identityClass' => $class,
                 'loginUrl' => ['admin/login'],
             ]]);

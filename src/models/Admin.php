@@ -32,6 +32,17 @@ class Admin extends ActiveRecord implements IdentityInterface
     use PasswordTrait;
     use DropDownTrait;
 
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 2;
+
+    public static function getStatuses()
+    {
+        return [
+            self::STATUS_ACTIVE => Yii::t('admin', 'Active'),
+            self::STATUS_INACTIVE => Yii::t('admin', 'Inactive'),
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -118,6 +129,7 @@ class Admin extends ActiveRecord implements IdentityInterface
         return [
             [['passwordHash', 'password'], 'safe'],
             [['email'], 'required'],
+            [['email'], 'unique'],
             [['status', 'passwordResetExpire', 'createdAt', 'updatedAt', 'role'], 'integer'],
             [['email', 'firstName', 'lastName', 'passwordResetToken', 'emailConfirmToken'], 'string', 'max' => 255],
             [['authKey'], 'string', 'max' => 32]
@@ -156,6 +168,6 @@ class Admin extends ActiveRecord implements IdentityInterface
 
     public static function findByEmail($email)
     {
-        return static::find()->where(['email'=>$email])->one();
+        return static::find()->where(['email' => $email])->one();
     }
 }

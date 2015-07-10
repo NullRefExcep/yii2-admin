@@ -7,6 +7,7 @@
 namespace nullref\admin;
 
 
+use nullref\admin\models\Admin;
 use nullref\core\components\ModuleInstaller;
 use yii\db\Schema;
 
@@ -50,6 +51,7 @@ class Installer extends ModuleInstaller
                 'passwordHash' => \Yii::$app->security->generatePasswordHash('password'),
                 'createdAt' => time(),
                 'updatedAt' => time(),
+                'status' => Admin::STATUS_ACTIVE,
             ];
             $this->db->createCommand()->insert($this->tableName, $data)->execute();
         }

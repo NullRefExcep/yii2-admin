@@ -20,6 +20,12 @@ class Module extends BaseModule implements IAdminModule
 
     public $adminModel = 'nullref\admin\models\Admin';
 
+    public $enableRbac = false;
+
+    public $authManager = [
+        'class' => 'yii\rbac\PhpManager',
+    ];
+
     public static function getAdminMenu()
     {
         return [
