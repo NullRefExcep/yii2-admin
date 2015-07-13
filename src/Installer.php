@@ -10,6 +10,7 @@ namespace nullref\admin;
 use nullref\admin\models\Admin;
 use nullref\core\components\ModuleInstaller;
 use yii\db\Schema;
+use yii\rbac\BaseManager;
 
 class Installer extends ModuleInstaller
 {
@@ -49,11 +50,22 @@ class Installer extends ModuleInstaller
             $data = [
                 'email' => 'admin@test.com',
                 'passwordHash' => \Yii::$app->security->generatePasswordHash('password'),
+                'firstName' => 'Admin',
+                'lastName' => 'Admin',
                 'createdAt' => time(),
                 'updatedAt' => time(),
                 'status' => Admin::STATUS_ACTIVE,
             ];
             $this->db->createCommand()->insert($this->tableName, $data)->execute();
+
+
+            /** @var BaseManager $authManager */
+            $authManager = \Yii::$app->getModule('admin')->get('authManager');
+
+            if (($role = $authManager->getRole('admin')) !== null) {
+                $id = $this->db->getLastInsertID();
+                $authManager->assign($role, $id);
+            };
         }
 
         parent::install();

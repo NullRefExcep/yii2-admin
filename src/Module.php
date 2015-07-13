@@ -2,11 +2,11 @@
 
 namespace nullref\admin;
 
-use nullref\admin\components\IMenuBuilder;
+use nullref\admin\interfaces\IMenuBuilder;
 use nullref\core\interfaces\IAdminModule;
 use Yii;
 use yii\base\InvalidConfigException;
-use yii\base\Module as BaseModule;
+use nullref\core\components\Module as BaseModule;
 
 /**
  * @author    Dmytro Karpovych
@@ -24,6 +24,9 @@ class Module extends BaseModule implements IAdminModule
 
     public $authManager = [
         'class' => 'yii\rbac\PhpManager',
+        'itemFile' => '@app/rbac/admin_items.php',
+        'assignmentFile' => '@app/rbac/admin_assignments.php',
+        'ruleFile' => '@app/rbac/admin_rules.php',
     ];
 
     public static function getAdminMenu()

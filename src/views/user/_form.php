@@ -20,6 +20,8 @@ $module = Yii::$app->getModule('admin');
 
     <?= $form->field($model, 'lastName')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'password')->passwordInput() ?>
+
     <?= $form->field($model, 'role')->textInput() ?>
 
     <?= $form->field($model, 'status')->dropDownList(Admin::getStatuses()) ?>

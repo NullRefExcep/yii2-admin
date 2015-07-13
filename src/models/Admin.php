@@ -51,6 +51,14 @@ class Admin extends ActiveRecord implements IdentityInterface
         return '{{%admin}}';
     }
 
+    public function afterSave($insert, $changedAttributes)
+    {
+        if ($insert){
+            //@TODO assign to selected role if RBAC enable
+        }
+        parent::afterSave($insert, $changedAttributes);
+    }
+
     /**
      * @inheritdoc
      * @param string $authKey
@@ -77,7 +85,7 @@ class Admin extends ActiveRecord implements IdentityInterface
      */
     public function getId()
     {
-        return 'admin' . $this->id;
+        return $this->id;
     }
 
     /**

@@ -47,7 +47,7 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Неправильное имя пользователя или пароль.');
+                $this->addError($attribute, Yii::t('admin', 'Incorrect username or password.'));//Неправильное имя пользователя или пароль.
             }
         }
     }
@@ -77,7 +77,7 @@ class LoginForm extends Model
         $class = $module->adminModel;
         if ($this->_user === false) {
             $user = call_user_func(array($class, 'findByEmail'), [$this->email]);
-            if ($user->status == Admin::STATUS_ACTIVE){
+            if ($user->status == Admin::STATUS_ACTIVE) {
                 $this->_user = $user;
             }
         }

@@ -6,6 +6,7 @@ use nullref\admin\components\AdminController;
 use nullref\admin\models\LoginForm;
 use Yii;
 use yii\filters\AccessControl;
+use yii\web\Response;
 
 /**
  *
@@ -27,7 +28,7 @@ class MainController extends AdminController
                     [
                         'actions' => ['login'],
                         'allow' => true,
-                        'roles' => ['?'],
+                        'roles' => ['?', '@'],
                     ],
                     [
                         'actions' => ['index', 'logout'],
@@ -50,9 +51,20 @@ class MainController extends AdminController
 
         $model = new LoginForm();
 
-        if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
-            $model->login();
-            return $this->redirect(['index']);
+        if (!Yii::$app->user->isGuest) {
+            return $this->redirect(['/admin/main']);
+        }
+
+        if ($model->load(\Yii::$app->request->post())) {
+            if ($model->validate()) {
+                $model->login();
+                return $this->redirect(['index']);
+            } else {
+                if (Yii::$app->request->isAjax) {
+                    Yii::$app->response->format = Response::FORMAT_JSON;
+                    return $model->errors;
+                }
+            }
         }
         return $this->render('login', ['model' => $model]);
     }

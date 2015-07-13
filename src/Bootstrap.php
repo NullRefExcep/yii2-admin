@@ -3,6 +3,7 @@ namespace nullref\admin;
 
 use yii\base\Application;
 use yii\base\BootstrapInterface;
+use yii\console\Application as ConsoleApplication;
 use yii\web\Application as WebApplication;
 
 /**
@@ -19,11 +20,11 @@ class Bootstrap implements BootstrapInterface
     {
         if ($app instanceof WebApplication) {
             $class = 'nullref\admin\models\Admin';
-            if (($module = $app->getModule('admin'))!==null) {
+            if (($module = $app->getModule('admin')) !== null) {
                 /** @var Module $module */
                 $class = $module->adminModel;
-                if($module->enableRbac){
-                    $module->setComponents([$module->authManager]);
+                if ($module->enableRbac) {
+                    $module->setComponents(['authManager' => $module->authManager]);
                 }
             }
             \Yii::$app->setComponents(['admin' => [
@@ -33,6 +34,16 @@ class Bootstrap implements BootstrapInterface
             ]]);
             $app->urlManager->addRules(['/admin/login' => '/admin/main/login']);
             $app->urlManager->addRules(['/admin/logout' => '/admin/main/logout']);
+        } elseif ($app instanceof ConsoleApplication) {
+            if (($module = $app->getModule('admin')) !== null) {
+                /** @var Module $module */
+                if ($module->enableRbac) {
+                    $module->controllerMap['rbac'] = [
+                        'class' => 'nullref\admin\console\RbacController',
+                    ];
+                    $module->setComponents(['authManager' => $module->authManager]);
+                }
+            }
         }
     }
 }
