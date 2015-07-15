@@ -23,7 +23,6 @@ class AdminController extends Controller
                     'delete' => ['post'],
                 ],
             ],
-
             'access' => [
                 'user' => 'admin',
                 'class' => AccessControl::className(),

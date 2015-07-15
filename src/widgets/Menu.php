@@ -1,7 +1,7 @@
 <?php
 namespace nullref\admin\widgets;
 
-use nullref\admin\components\IMenuBuilder;
+use nullref\admin\interfaces\IMenuBuilder;
 use nullref\core\interfaces\IAdminModule;
 use nullref\sbadmin\widgets\MetisMenu;
 use Yii;
@@ -23,11 +23,10 @@ class Menu extends Widget
         foreach (Yii::$app->modules as $id => $module) {
             if ($module instanceof IAdminModule) {
                 $this->items[$id] = $module::getAdminMenu();
-            } elseif (is_array($module) && isset($module['class'])) {
-                $class = $module['class'];
-                $reflection = new \ReflectionMethod($class, $methodName);
+            } elseif (is_array($module) && isset($module['class']) && method_exists($module['class'], $methodName)) {
+                $reflection = new \ReflectionMethod($module['class'], $methodName);
                 if ($reflection->isStatic() && $reflection->isPublic()) {
-                    $this->items[$id] = call_user_func(array($class, $methodName));
+                    $this->items[$id] = call_user_func(array($module['class'], $methodName));
                 }
             }
         }
