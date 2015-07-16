@@ -24,7 +24,10 @@ class Bootstrap implements BootstrapInterface
                 /** @var Module $module */
                 $class = $module->adminModel;
                 if ($module->enableRbac) {
-                    $module->setComponents(['authManager' => $module->authManager]);
+                    $module->setComponents([
+                        'authManager' => $module->authManager,
+                        'roleContainer' => $module->roleContainer,
+                    ]);
                 }
             }
             \Yii::$app->setComponents(['admin' => [
@@ -41,7 +44,10 @@ class Bootstrap implements BootstrapInterface
                     $module->controllerMap['rbac'] = [
                         'class' => 'nullref\admin\console\RbacController',
                     ];
-                    $module->setComponents(['authManager' => $module->authManager]);
+                    $module->setComponents([
+                        'authManager' => $module->authManager,
+                        'roleContainer' => $module->roleContainer,
+                    ]);
                 }
             }
         }

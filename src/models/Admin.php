@@ -2,6 +2,7 @@
 
 namespace nullref\admin\models;
 
+use nullref\admin\Module;
 use nullref\useful\DropDownTrait;
 use nullref\useful\PasswordTrait;
 use Yii;
@@ -53,11 +54,30 @@ class Admin extends ActiveRecord implements IdentityInterface
 
     public function afterSave($insert, $changedAttributes)
     {
-        if ($insert){
-            //@TODO assign to selected role if RBAC enable
+        /** @var Module $module */
+        $module = Yii::$app->getModule('admin');
+        if ($module->enableRbac && $insert) {
+            $roles = $module->get('roleContainer')->getRoles($module->get('authManager'));
+            $module->get('authManager')->assign($roles[$this->role], $this->id);
         }
         parent::afterSave($insert, $changedAttributes);
     }
+
+    public function beforeSave($insert)
+    {
+        /** @var Module $module */
+        $module = Yii::$app->getModule('admin');
+        if ($module->enableRbac && !$insert && ($this->role != $this->oldAttributes['role'])) {
+            $roles = $module->get('roleContainer')->getRoles($module->get('authManager'));
+            if (isset($roles[$this->oldAttributes['role']])) {
+                $module->get('authManager')->revoke($roles[$this->oldAttributes['role']], $this->id);
+            }
+            $module->get('authManager')->assign($roles[$this->role], $this->id);
+        }
+
+        return parent::beforeSave($insert);
+    }
+
 
     /**
      * @inheritdoc
@@ -135,10 +155,10 @@ class Admin extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['passwordHash', 'password'], 'safe'],
+            [['passwordHash', 'password', 'role'], 'safe'],
             [['email'], 'required'],
             [['email'], 'unique'],
-            [['status', 'passwordResetExpire', 'createdAt', 'updatedAt', 'role'], 'integer'],
+            [['status', 'passwordResetExpire', 'createdAt', 'updatedAt'], 'integer'],
             [['email', 'firstName', 'lastName', 'passwordResetToken', 'emailConfirmToken'], 'string', 'max' => 255],
             [['authKey'], 'string', 'max' => 32]
         ];
@@ -178,4 +198,6 @@ class Admin extends ActiveRecord implements IdentityInterface
     {
         return static::find()->where(['email' => $email])->one();
     }
+
+
 }

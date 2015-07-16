@@ -6,6 +6,7 @@ use Yii;
 use yii\console\Controller;
 use yii\helpers\FileHelper;
 use yii\rbac\BaseManager;
+use yii\rbac\Role;
 
 /**
  * @author    Dmytro Karpovych
@@ -15,22 +16,31 @@ class RbacController extends Controller
 {
     public function actionInit()
     {
-        $file = Yii::getAlias('@app/config/admin_rbac.php');
         $dir = Yii::getAlias('@app/rbac');
         if (!file_exists($dir)) {
             FileHelper::createDirectory($dir);
             echo 'RBAC configs dir was created.' . PHP_EOL;
         }
 
-        if (file_exists($file)) {
-            /** @var BaseManager $authManager */
-            $authManager = \Yii::$app->getModule('admin')->get('authManager');
-            include($file);
-            echo 'RABC was configured' . PHP_EOL;
+        /** @var BaseManager $authManager */
+        $authManager = \Yii::$app->getModule('admin')->get('authManager');
+        if ($this->confirm('Configure from role container?')) {
+            /** @var Role[] $roles */
+            $roles = \Yii::$app->getModule('admin')->get('roleContainer')->getRoles($authManager);
+            foreach ($roles as $role) {
+                $authManager->add($role);
+            }
         } else {
-            echo 'You must create file "@app/config/admin_rbac.php"' . PHP_EOL;
-            //@TODO propose to create file
+            $file = Yii::getAlias('@app/config/admin_rbac.php');
+            if (file_exists($file)) {
+                include($file);
+            } else {
+                echo 'You must create file "@app/config/admin_rbac.php"' . PHP_EOL;
+                //@TODO propose to create file
+            }
         }
+
+        echo 'RABC was configured' . PHP_EOL;
     }
 
     public function actionView()

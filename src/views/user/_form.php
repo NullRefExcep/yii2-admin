@@ -22,7 +22,9 @@ $module = Yii::$app->getModule('admin');
 
     <?= $form->field($model, 'password')->passwordInput() ?>
 
-    <?= $form->field($model, 'role')->textInput() ?>
+    <?php if (Yii::$app->getModule('admin')->enableRbac): ?>
+        <?= $form->field($model, 'role')->dropDownList(Yii::$app->getModule('admin')->get('roleContainer')->getTitles()) ?>
+    <?php endif ?>
 
     <?= $form->field($model, 'status')->dropDownList(Admin::getStatuses()) ?>
 
