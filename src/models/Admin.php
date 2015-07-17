@@ -34,7 +34,7 @@ class Admin extends ActiveRecord implements IdentityInterface
     use DropDownTrait;
 
     const STATUS_ACTIVE = 1;
-    const STATUS_INACTIVE = 2;
+    const STATUS_INACTIVE = 0;
 
     public static function getStatuses()
     {
@@ -118,6 +118,32 @@ class Admin extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Finds an identity by the given ID.
+     * @param integer $id the ID to be looked for
+     * @return IdentityInterface the identity object that matches the given ID.
+     * Null should be returned if such an identity cannot be found
+     * or the identity is not in an active state (disabled, deleted, etc.)
+     */
+    public static function findIdentity($id)
+    {
+        return self::findOne($id);
+    }
+
+    /**
+     * @inheritdoc
+     * @return string|void
+     */
+    public function getAuthKey()
+    {
+        return md5($this->email . $this->passwordHash);
+    }
+
+    public function getName()
+    {
+        return $this->firstName . ' ' . $this->lastName;
+    }
+
+    /**
      * @inheritdoc
      */
     public function behaviors()
@@ -129,24 +155,6 @@ class Admin extends ActiveRecord implements IdentityInterface
                 'updatedAtAttribute' => 'updatedAt',
             ],
         ]);
-    }
-
-    /**
-     * Finds an identity by the given ID.
-     * @param integer $id the ID to be looked for
-     * @return IdentityInterface the identity object that matches the given ID.
-     * Null should be returned if such an identity cannot be found
-     * or the identity is not in an active state (disabled, deleted, etc.)
-     */
-    public static function findIdentity($id)
-    {
-        $id = str_replace('admin', '', $id);
-        return self::findOne($id);
-    }
-
-    public function getName()
-    {
-        return $this->firstName . ' ' . $this->lastName;
     }
 
     /**
@@ -162,15 +170,6 @@ class Admin extends ActiveRecord implements IdentityInterface
             [['email', 'firstName', 'lastName', 'passwordResetToken', 'emailConfirmToken'], 'string', 'max' => 255],
             [['authKey'], 'string', 'max' => 32]
         ];
-    }
-
-    /**
-     * @inheritdoc
-     * @return string|void
-     */
-    public function getAuthKey()
-    {
-        return md5($this->email . $this->passwordHash);
     }
 
     /**
@@ -194,6 +193,10 @@ class Admin extends ActiveRecord implements IdentityInterface
         ];
     }
 
+    /**
+     * @param $email
+     * @return array|null|ActiveRecord
+     */
     public static function findByEmail($email)
     {
         return static::find()->where(['email' => $email])->one();

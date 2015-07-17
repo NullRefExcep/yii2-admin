@@ -51,7 +51,7 @@ class MainController extends AdminController
 
         $model = new LoginForm();
 
-        if (!Yii::$app->user->isGuest) {
+        if (!Yii::$app->get('admin')->isGuest) {
             return $this->redirect(['/admin/main']);
         }
 
