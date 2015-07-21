@@ -14,7 +14,11 @@ $this->params['breadcrumbs'][] = Yii::t('admin', 'Update');
 ?>
 <div class="admin-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header"><?= Html::encode($this->title) ?></h1>
+        </div>
+    </div>
 
     <?= $this->render('_form', [
         'model' => $model,

@@ -183,12 +183,14 @@ class Admin extends ActiveRecord implements IdentityInterface
             'firstName' => Yii::t('user', 'First Name'),
             'lastName' => Yii::t('user', 'Last Name'),
             'status' => Yii::t('user', 'Status'),
+            'password' => Yii::t('user', 'Password'),
             'passwordHash' => Yii::t('user', 'Password Hash'),
             'passwordResetToken' => Yii::t('user', 'Password Reset Token'),
             'passwordResetExpire' => Yii::t('user', 'Password Reset Expire'),
             'createdAt' => Yii::t('user', 'Created At'),
             'updatedAt' => Yii::t('user', 'Updated At'),
             'authKey' => Yii::t('user', 'Auth Key'),
+            'role' => Yii::t('user', 'Role'),
             'emailConfirmToken' => Yii::t('user', 'Email Confirm Token'),
         ];
     }
