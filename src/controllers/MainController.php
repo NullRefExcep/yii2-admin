@@ -3,9 +3,12 @@
 namespace nullref\admin\controllers;
 
 use nullref\admin\components\AdminController;
+use nullref\admin\models\Admin;
 use nullref\admin\models\LoginForm;
+use nullref\admin\models\PasswordResetForm;
 use Yii;
 use yii\filters\AccessControl;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -45,6 +48,14 @@ class MainController extends AdminController
         return $this->render('index');
     }
 
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+        ];
+    }
     public function actionLogin()
     {
         $this->layout = 'base';
@@ -74,6 +85,23 @@ class MainController extends AdminController
         Yii::$app->get('admin')->logout();
 
         return $this->goHome();
+    }
+
+    public function actionReset($id, $token = false)
+    {
+        /** @var Admin $user */
+        $user = Admin::findOne($id);
+        if (($token !== false) && (isset($user)) && ($user->passwordResetToken === $token) && ($user->passwordResetExpire >= time())) {
+            $model = new PasswordResetForm();
+            if ($model->load(Yii::$app->getRequest()->post()) && $model->changePassword($user)) {
+                Yii::$app->user->login($user);
+                return $this->redirect(['index']);
+            }
+            return $this->render('password-reset', [
+                'model' => $model,
+            ]);
+        }
+        throw new NotFoundHttpException();
     }
 }
 

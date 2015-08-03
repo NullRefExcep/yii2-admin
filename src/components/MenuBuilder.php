@@ -16,6 +16,19 @@ abstract class MenuBuilder implements IMenuBuilder
         if ($role === null) {
             return [];
         }
+        $result = [];
+
+        foreach ($menu as $key => $item) {
+
+            if (isset($item[$paramName])) {
+                if (in_array($role, $item[$paramName])) {
+                    $result[$key] = $item;
+                }
+            } else {
+                $result[$key] = $item;
+            }
+        }
+
         //@TODO implement filtering items with $role in $paramName value
         /**e.g:
          * input:
@@ -32,6 +45,6 @@ abstract class MenuBuilder implements IMenuBuilder
          *  'tag' => ['label' => 'Tags', 'icon' => 'archive', 'url' => ['/tag/admin'],'roles'=>[1,2]],
          *  ]]
          */
-        return $menu;
+        return $result;
     }
 } 

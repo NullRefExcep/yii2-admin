@@ -4,6 +4,7 @@ namespace nullref\admin\models;
 
 use nullref\admin\Module;
 use nullref\useful\DropDownTrait;
+use nullref\useful\JsonBehavior;
 use nullref\useful\PasswordTrait;
 use Yii;
 use yii\base\NotSupportedException;
@@ -27,6 +28,7 @@ use yii\web\IdentityInterface;
  * @property integer $updatedAt
  * @property string $authKey
  * @property string $emailConfirmToken
+ * @property string|array $data
  */
 class Admin extends ActiveRecord implements IdentityInterface
 {
@@ -154,6 +156,10 @@ class Admin extends ActiveRecord implements IdentityInterface
                 'createdAtAttribute' => 'createdAt',
                 'updatedAtAttribute' => 'updatedAt',
             ],
+            'json' => [
+                'class' => JsonBehavior::className(),
+                'fields' => ['data'],
+            ],
         ]);
     }
 
@@ -163,7 +169,7 @@ class Admin extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['passwordHash', 'password', 'role'], 'safe'],
+            [['passwordHash', 'password', 'role', 'data'], 'safe'],
             [['email'], 'required'],
             [['email'], 'unique'],
             [['status', 'passwordResetExpire', 'createdAt', 'updatedAt'], 'integer'],

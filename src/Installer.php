@@ -45,6 +45,7 @@ class Installer extends ModuleInstaller
                 'updatedAt' => Schema::TYPE_INTEGER . ' NOT NULL',
                 'authKey' => Schema::TYPE_STRING . '(32) NULL DEFAULT NULL',
                 'emailConfirmToken' => Schema::TYPE_STRING . ' NULL DEFAULT NULL',
+                'data' => Schema::TYPE_TEXT,
             ], $tableOptions);
 
             $data = [
