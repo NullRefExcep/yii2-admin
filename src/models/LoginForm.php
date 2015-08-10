@@ -77,7 +77,7 @@ class LoginForm extends Model
         $class = $module->adminModel;
         if ($this->_user === false) {
             $user = call_user_func(array($class, 'findByEmail'), [$this->email]);
-            if ($user->status == Admin::STATUS_ACTIVE) {
+            if ($user && ($user->status == Admin::STATUS_ACTIVE)) {
                 $this->_user = $user;
             }
         }
