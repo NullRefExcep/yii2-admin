@@ -16,6 +16,7 @@ use yii\web\IdentityInterface;
  * This is the model class for table "{{%admin}}".
  *
  * @property integer $id
+ * @property string $username
  * @property string $email
  * @property string $firstName
  * @property string $lastName
@@ -170,8 +171,8 @@ class Admin extends ActiveRecord implements IdentityInterface
     {
         return [
             [['passwordHash', 'password', 'role', 'data'], 'safe'],
-            [['email'], 'required'],
-            [['email'], 'unique'],
+            [['email','username'], 'required'],
+            [['username'], 'unique'],
             [['status', 'passwordResetExpire', 'createdAt', 'updatedAt'], 'integer'],
             [['email', 'firstName', 'lastName', 'passwordResetToken', 'emailConfirmToken'], 'string', 'max' => 255],
             [['authKey'], 'string', 'max' => 32]
@@ -186,6 +187,7 @@ class Admin extends ActiveRecord implements IdentityInterface
         return [
             'id' => Yii::t('user', 'ID'),
             'email' => Yii::t('user', 'Email'),
+            'username' => Yii::t('user', 'Username'),
             'firstName' => Yii::t('user', 'First Name'),
             'lastName' => Yii::t('user', 'Last Name'),
             'status' => Yii::t('user', 'Status'),
@@ -202,12 +204,12 @@ class Admin extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @param $email
+     * @param $value
      * @return array|null|ActiveRecord
      */
-    public static function findByEmail($email)
+    public static function findByUsername($value)
     {
-        return static::find()->where(['email' => $email])->one();
+        return static::find()->orWhere(['username' => $value])->orWhere(['email' => $value])->one();
     }
 
 

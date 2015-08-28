@@ -19,10 +19,10 @@ use yii\helpers\Html;
                         <?php $form = ActiveForm::begin(); ?>
                         <fieldset>
 
-                            <?= $form->field($model, 'email', [
+                            <?= $form->field($model, 'username', [
                                 'template' => '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>{input}</div>{hint}{error}'
                             ])->textInput([
-                                'placeholder' => ArrayHelper::getValue($model->attributeLabels(), 'email')
+                                'placeholder' => ArrayHelper::getValue($model->attributeLabels(), 'username')
                             ]); ?>
 
                             <?= $form->field($model, 'password', [

@@ -14,7 +14,7 @@ use yii\base\Model;
 class LoginForm extends Model
 {
 
-    public $email;
+    public $username;
     public $password;
     public $rememberMe = true;
 
@@ -27,8 +27,7 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            [['email', 'password'], 'required'],
-            ['email', 'email'],
+            [['username', 'password'], 'required'],
             ['rememberMe', 'boolean'],
             ['password', 'validatePassword'],
         ];
@@ -76,7 +75,7 @@ class LoginForm extends Model
         $module = Yii::$app->getModule('admin');
         $class = $module->adminModel;
         if ($this->_user === false) {
-            $user = call_user_func(array($class, 'findByEmail'), [$this->email]);
+            $user = call_user_func(array($class, 'findByUsername'), [$this->username]);
             if ($user && ($user->status == Admin::STATUS_ACTIVE)) {
                 $this->_user = $user;
             }

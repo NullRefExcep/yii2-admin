@@ -7,21 +7,26 @@ use yii\rbac\BaseManager;
 
 class m000000_000001_create_admin_table extends Migration
 {
-    protected $tableName = '{{%admin}}';
+    use \nullref\core\traits\MigrationTrait;
 
+    protected $tableName = '{{%admin}}';
 
     public function up()
     {
-        $tableOptions = null;
-        if (\Yii::$app->db->driverName === 'mysql') {
-            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
+        if ($this->tableExist($this->tableName)){
+            $this->stdout("Table '{$this->tableName}' already exists\n");
+            if ($this->confirm('Drop and create new?')) {
+                $this->dropTable($this->tableName);
+            } else {
+                return true;
+            }
         }
-
         /**
          * Create table
          */
         $this->createTable($this->tableName, [
             'id' => Schema::TYPE_PK,
+            'username' => Schema::TYPE_STRING . ' NOT NULL',
             'email' => Schema::TYPE_STRING . ' NOT NULL',
             'firstName' => Schema::TYPE_STRING . ' NULL',
             'lastName' => Schema::TYPE_STRING . ' NULL',
@@ -35,12 +40,13 @@ class m000000_000001_create_admin_table extends Migration
             'authKey' => Schema::TYPE_STRING . '(32) NULL DEFAULT NULL',
             'emailConfirmToken' => Schema::TYPE_STRING . ' NULL DEFAULT NULL',
             'data' => Schema::TYPE_TEXT,
-        ], $tableOptions);
+        ], $this->getTableOptions());
 
         /**
          * Default admin values
          */
         $data = [
+            'username' => 'admin',
             'email' => 'admin@test.com',
             'passwordHash' => \Yii::$app->security->generatePasswordHash('password'),
             'firstName' => 'Admin',
@@ -49,6 +55,10 @@ class m000000_000001_create_admin_table extends Migration
             'updatedAt' => time(),
             'status' => Admin::STATUS_ACTIVE,
         ];
+
+        $this->stdout("New user was added:\n");
+        $this->stdout("Username: '{$data['username']}'\n");
+        $this->stdout("Password: 'password'\n");
 
         /**
          * Create default admin
@@ -60,7 +70,11 @@ class m000000_000001_create_admin_table extends Migration
 
         if (($authManager !== null) && ($role = $authManager->getRole('admin')) !== null) {
             $id = $this->db->getLastInsertID();
-            $authManager->assign($role, $id);
+            try {
+                $authManager->assign($role, $id);
+            } catch (\Exception $e){
+              $this->stdout($e->getMessage()."\n");
+            }
         };
     }
 
