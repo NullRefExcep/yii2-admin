@@ -56,6 +56,14 @@ class m000000_000001_create_admin_table extends Migration
             'status' => Admin::STATUS_ACTIVE,
         ];
 
+        /** @var BaseManager $authManager */
+        $authManager = \Yii::$app->getModule('admin')->get('authManager', false);
+        $hasRbac = (($authManager !== null) && ($role = $authManager->getRole('admin')) !== null);
+
+        if ($hasRbac){
+            $data['role'] ='admin';
+        }
+
         $this->stdout("New user was added:\n");
         $this->stdout("Username: '{$data['username']}'\n");
         $this->stdout("Password: 'password'\n");
@@ -65,10 +73,8 @@ class m000000_000001_create_admin_table extends Migration
          */
         $this->db->createCommand()->insert($this->tableName, $data)->execute();
 
-        /** @var BaseManager $authManager */
-        $authManager = \Yii::$app->getModule('admin')->get('authManager', false);
 
-        if (($authManager !== null) && ($role = $authManager->getRole('admin')) !== null) {
+        if ($hasRbac) {
             $id = $this->db->getLastInsertID();
             try {
                 $authManager->assign($role, $id);
