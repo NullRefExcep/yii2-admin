@@ -1,5 +1,5 @@
 <?php
-
+use nullref\core\widgets\WidgetContainer;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
@@ -17,5 +17,6 @@
 
     </div>
     <!-- /#wrapper -->
+<?= WidgetContainer::widget(['widgets'=>Yii::$app->getModule('admin')->globalWidgets]) ?>
 
 <?php $this->endContent('@nullref/admin/views/layouts/base.php') ?>

@@ -22,6 +22,8 @@ class Module extends BaseModule implements IAdminModule
 
     public $enableRbac = false;
 
+    public $globalWidgets = [];
+
     /** @var array */
     public $authManager = [
         'class' => 'yii\rbac\PhpManager',
@@ -50,6 +52,7 @@ class Module extends BaseModule implements IAdminModule
         if ((($builder = $this->get('menuBuilder', false)) !== null) && (!($builder instanceof IMenuBuilder))) {
             throw new InvalidConfigException('Menu builder must implement IMenuBuilder interface');
         }
+        //@TODO add checking $globalWidgets
     }
 
 }
