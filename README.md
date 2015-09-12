@@ -22,3 +22,22 @@ or add
 ```
 
 to the require section of your `composer.json` file.
+
+
+### Admin Menu
+
+For adding items to admin menu you have to implement IAdminModule interface, e.g.:
+
+```php
+public static function getAdminMenu()
+   {
+       return [
+           'label' => \Yii::t('admin', 'Subscription'),
+           'icon' => 'envelope',
+           'items' => [
+               'emails' => ['label' => \Yii::t('app', 'Subscribers'), 'icon' => 'envelope-o', 'url' => ['/subscription/email/index']],
+               'messages' => ['label' => \Yii::t('app', 'Messages'), 'icon' => 'envelope-o', 'url' => ['/subscription/message/index']],
+           ]
+       ];
+   }
+```
