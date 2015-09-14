@@ -22,4 +22,13 @@ class AdminAsset extends AssetBundle
         'yii\web\YiiAsset',
         'nullref\sbadmin\assets\SBAdminAsset',
     ];
+    
+    public static function register($view)
+    {
+        if (class_exists('\app\assets\AdminAsset')) {
+            call_user_func(['\app\assets\AdminAsset', 'register'], $view);
+        }
+        return parent::register($view);
+    }
+
 } 
