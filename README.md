@@ -23,6 +23,12 @@ or add
 
 to the require section of your `composer.json` file.
 
+Then You have run console command for install this module and run migrations:
+
+```
+php yii module/install admin
+php yii modules-migrate
+```
 
 ### Admin Menu
 
@@ -41,3 +47,7 @@ public static function getAdminMenu()
        ];
    }
 ```
+
+### Modules system 
+
+This module integrated in system which contain other useful components. [View details](https://github.com/NullRefExcep/yii2-core)
