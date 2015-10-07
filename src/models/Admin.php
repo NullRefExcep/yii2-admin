@@ -171,7 +171,7 @@ class Admin extends ActiveRecord implements IdentityInterface
     {
         return [
             [['passwordHash', 'password', 'role', 'data'], 'safe'],
-            [['username'], 'required'],
+            [['email','username'], 'required'],
             [['email'], 'email'],
             [['username'], 'unique'],
             [['status', 'passwordResetExpire', 'createdAt', 'updatedAt'], 'integer'],

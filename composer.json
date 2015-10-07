@@ -10,6 +10,9 @@
         "nullref/yii2-sb-admin-2": "dev-master",
         "nullref/yii2-core": "dev-master"
     },
+    "require-dev": {
+        "yiisoft/yii2-gii": "*"
+    },
     "autoload": {
         "psr-4": {
             "nullref\\admin\\": "src/"
