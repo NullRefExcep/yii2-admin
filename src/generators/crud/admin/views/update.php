@@ -31,6 +31,10 @@ $this->params['breadcrumbs'][] = <?= $generator->generateString('Update') ?>;
         </div>
     </div>
 
+    <p>
+        <?= "<?= " ?>Html::a(<?= $generator->generateString('List') ?>, ['index'], ['class' => 'btn btn-success']) ?>
+    </p>
+
     <?= "<?= " ?>$this->render('_form', [
         'model' => $model,
     ]) ?>

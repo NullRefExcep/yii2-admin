@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <p>
+        <?= "<?= " ?>Html::a(<?= $generator->generateString('List') ?>, ['index'], ['class' => 'btn btn-success']) ?>
         <?= "<?= " ?>Html::a(<?= $generator->generateString('Update') ?>, ['update', <?= $urlParams ?>], ['class' => 'btn btn-primary']) ?>
         <?= "<?= " ?>Html::a(<?= $generator->generateString('Delete') ?>, ['delete', <?= $urlParams ?>], [
             'class' => 'btn btn-danger',
