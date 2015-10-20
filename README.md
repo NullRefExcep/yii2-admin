@@ -51,3 +51,23 @@ public static function getAdminMenu()
 ### Modules system 
 
 This module integrated in system which contain other useful components. [View details](https://github.com/NullRefExcep/yii2-core)
+
+### Overriding
+
+Example:
+
+```php
+/** module config **/
+
+'admin' => [
+   'class' => 'nullref\admin\Module',
+   'adminModel' => 'app\models\Admin', // admin model class
+   'controllerMap' => [  //controllers
+      'user' => 'app\modules\admin\controllers\UserController',
+      'main' => 'app\modules\admin\controllers\MainController',
+   ],
+   'components' => [  //menu builder
+      "menuBuilder" => 'app\\components\\MenuBuilder',
+   ],
+],
+```
