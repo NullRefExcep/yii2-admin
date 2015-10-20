@@ -171,7 +171,7 @@ class Admin extends ActiveRecord implements IdentityInterface
     {
         return [
             [['passwordHash', 'password', 'role', 'data'], 'safe'],
-            [['email','username'], 'required'],
+            [['username'], 'required'],
             [['email'], 'email'],
             [['username'], 'unique'],
             [['status', 'passwordResetExpire', 'createdAt', 'updatedAt'], 'integer'],
@@ -202,6 +202,15 @@ class Admin extends ActiveRecord implements IdentityInterface
             'role' => Yii::t('user', 'Role'),
             'emailConfirmToken' => Yii::t('user', 'Email Confirm Token'),
         ];
+    }
+
+    /**
+     * @return object
+     * @throws \yii\base\InvalidConfigException
+     */
+    public static function find()
+    {
+        return Yii::createObject(AdminQuery::className(), [get_called_class()]);
     }
 
     /**

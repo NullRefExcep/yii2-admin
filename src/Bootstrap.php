@@ -1,12 +1,13 @@
 <?php
 namespace nullref\admin;
 
+use nullref\admin\models\AdminQuery;
 use yii\base\Application;
 use yii\base\BootstrapInterface;
-use yii\base\Event;
 use yii\console\Application as ConsoleApplication;
 use yii\web\Application as WebApplication;
 use yii\gii\Module as Gii;
+use yii\base\Event;
 
 /**
  * @author    Dmytro Karpovych
@@ -20,28 +21,50 @@ class Bootstrap implements BootstrapInterface
      */
     public function bootstrap($app)
     {
-        if ($app instanceof WebApplication) {
+        $module = $app->getModule('admin');
 
-            /** Rules for login/logout */
-            $app->urlManager->addRules(['/admin/login' => '/admin/main/login']);
-            $app->urlManager->addRules(['/admin/logout' => '/admin/main/logout']);
+        $class = 'nullref\admin\models\Admin';
 
-            $adminModel = 'nullref\admin\models\Admin';
-
-            $modules = $app->getModules();
-
-            /** If adminModel was overridden */
-            if (isset($modules['admin']) && isset($modules['admin']['adminModel'])) {
-                $adminModel = $modules['admin']['adminModel'];
+        $definition = $class;
+        if ($module !== null) {
+            /** @var Module $module */
+            $definition = $module->adminModel;
+            if ($module->enableRbac) {
+                $module->setComponents([
+                    'authManager' => $module->authManager,
+                    'roleContainer' => $module->roleContainer,
+                ]);
             }
+        }
 
-            /** config admin user model */
+        \Yii::$container->set($class, $definition);
+
+        $className = is_array($definition) ? $definition['class'] : $definition;
+
+        Event::on(AdminQuery::className(),AdminQuery::EVENT_INIT,function(Event $e) use($class, $className){
+            if ($e->sender->modelClass = $class) {
+                $e->sender->modelClass = $className;
+            }
+        });
+
+
+        if ($app instanceof WebApplication) {
             \Yii::$app->setComponents(['admin' => [
                 'class' => 'nullref\admin\components\User',
-                'identityClass' => $adminModel,
+                'identityClass' => $className,
                 'loginUrl' => ['admin/login'],
             ]]);
-
+            $app->urlManager->addRules(['/admin/login' => '/admin/main/login']);
+            $app->urlManager->addRules(['/admin/logout' => '/admin/main/logout']);
+        } elseif ($app instanceof ConsoleApplication) {
+            if ($module !== null) {
+                /** @var Module $module */
+                if ($module->enableRbac) {
+                    $module->controllerMap['rbac'] = [
+                        'class' => 'nullref\admin\console\RbacController',
+                    ];
+                }
+            }
         }
 
         Event::on(Module::className(), Module::EVENT_BEFORE_INIT, function (Event $event) use ($app) {
@@ -72,6 +95,5 @@ class Bootstrap implements BootstrapInterface
                 ];
             });
         }
-
     }
 }
