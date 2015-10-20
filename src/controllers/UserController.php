@@ -49,7 +49,6 @@ class UserController extends AdminController
     {
         $model = Yii::createObject([
             'class'    => Admin::className(),
-            'scenario' => 'create',
         ]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
