@@ -5,7 +5,6 @@ namespace nullref\admin\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use nullref\admin\models\Admin;
 
 /**
  * AdminSearch represents the model behind the search form about `nullref\admin\models\Admin`.

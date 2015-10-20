@@ -2,10 +2,10 @@
 
 namespace nullref\admin\controllers;
 
-use Yii;
+use nullref\admin\components\AdminController;
 use nullref\admin\models\Admin;
 use nullref\admin\models\AdminSearch;
-use nullref\admin\components\AdminController;
+use Yii;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -48,7 +48,7 @@ class UserController extends AdminController
     public function actionCreate()
     {
         $model = Yii::createObject([
-            'class'    => Admin::className(),
+            'class' => Admin::className(),
         ]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {

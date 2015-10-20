@@ -1,5 +1,6 @@
 <?php
 use nullref\core\widgets\WidgetContainer;
+
 /* @var $this \yii\web\View */
 /* @var $content string */
 
@@ -8,15 +9,15 @@ use nullref\core\widgets\WidgetContainer;
 <?php $this->beginContent('@nullref/admin/views/layouts/base.php') ?>
     <div id="wrapper">
 
-    <?= $this->render('header') ?>
+        <?= $this->render('header') ?>
 
-    <div id="page-wrapper">
-        <?= $content ?>
-    </div>
-    <!-- /#page-wrapper -->
+        <div id="page-wrapper">
+            <?= $content ?>
+        </div>
+        <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->
-<?= WidgetContainer::widget(['widgets'=>Yii::$app->getModule('admin')->globalWidgets]) ?>
+<?= WidgetContainer::widget(['widgets' => Yii::$app->getModule('admin')->globalWidgets]) ?>
 
 <?php $this->endContent('@nullref/admin/views/layouts/base.php') ?>

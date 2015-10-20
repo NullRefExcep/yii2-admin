@@ -4,10 +4,10 @@ namespace nullref\admin;
 use nullref\admin\models\AdminQuery;
 use yii\base\Application;
 use yii\base\BootstrapInterface;
-use yii\console\Application as ConsoleApplication;
-use yii\web\Application as WebApplication;
-use yii\gii\Module as Gii;
 use yii\base\Event;
+use yii\console\Application as ConsoleApplication;
+use yii\gii\Module as Gii;
+use yii\web\Application as WebApplication;
 
 /**
  * @author    Dmytro Karpovych
@@ -41,7 +41,7 @@ class Bootstrap implements BootstrapInterface
 
         $className = is_array($definition) ? $definition['class'] : $definition;
 
-        Event::on(AdminQuery::className(),AdminQuery::EVENT_INIT,function(Event $e) use($class, $className){
+        Event::on(AdminQuery::className(), AdminQuery::EVENT_INIT, function (Event $e) use ($class, $className) {
             if ($e->sender->modelClass = $class) {
                 $e->sender->modelClass = $className;
             }
@@ -71,7 +71,7 @@ class Bootstrap implements BootstrapInterface
             $module = $event->sender;
             /** @var Module $module */
             if ($module->enableRbac) {
-                if ($app instanceof ConsoleApplication){
+                if ($app instanceof ConsoleApplication) {
                     $module->controllerMap['rbac'] = [
                         'class' => 'nullref\admin\console\RbacController',
                     ];

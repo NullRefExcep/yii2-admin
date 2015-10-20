@@ -1,8 +1,8 @@
 <?php
 
 use nullref\admin\models\Admin;
-use yii\db\Schema;
 use yii\db\Migration;
+use yii\db\Schema;
 use yii\rbac\BaseManager;
 
 class m000000_000001_create_admin_table extends Migration
@@ -13,7 +13,7 @@ class m000000_000001_create_admin_table extends Migration
 
     public function up()
     {
-        if ($this->tableExist($this->tableName)){
+        if ($this->tableExist($this->tableName)) {
             $this->stdout("Table '{$this->tableName}' already exists\n");
             if ($this->confirm('Drop and create new?')) {
                 $this->dropTable($this->tableName);
@@ -60,8 +60,8 @@ class m000000_000001_create_admin_table extends Migration
         $authManager = \Yii::$app->getModule('admin')->get('authManager', false);
         $hasRbac = (($authManager !== null) && ($role = $authManager->getRole('admin')) !== null);
 
-        if ($hasRbac){
-            $data['role'] ='admin';
+        if ($hasRbac) {
+            $data['role'] = 'admin';
         }
 
         $this->stdout("New user was added:\n");
@@ -78,8 +78,8 @@ class m000000_000001_create_admin_table extends Migration
             $id = $this->db->getLastInsertID();
             try {
                 $authManager->assign($role, $id);
-            } catch (\Exception $e){
-              $this->stdout($e->getMessage()."\n");
+            } catch (\Exception $e) {
+                $this->stdout($e->getMessage() . "\n");
             }
         };
     }

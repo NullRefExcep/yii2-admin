@@ -56,6 +56,7 @@ class MainController extends AdminController
             ],
         ];
     }
+
     public function actionLogin()
     {
         $this->layout = 'base';

@@ -1,8 +1,6 @@
 <?php
 
 use yii\bootstrap\ActiveForm;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
 
 /** @var $this \yii\web\View */
 ?>
