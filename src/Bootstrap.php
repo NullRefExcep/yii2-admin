@@ -42,7 +42,7 @@ class Bootstrap implements BootstrapInterface
         $className = is_array($definition) ? $definition['class'] : $definition;
 
         Event::on(AdminQuery::className(), AdminQuery::EVENT_INIT, function (Event $e) use ($class, $className) {
-            if ($e->sender->modelClass = $class) {
+            if ($e->sender->modelClass == $class) {
                 $e->sender->modelClass = $className;
             }
         });
