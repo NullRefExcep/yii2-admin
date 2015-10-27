@@ -93,6 +93,12 @@ class Bootstrap implements BootstrapInterface
                         'admin-crud' => '@nullref/admin/generators/crud/admin',
                     ]
                 ];
+                $gii->generators['stuff'] = [
+                    'class' => 'nullref\admin\generators\stuff\Generator',
+                    'templates' => [
+                        'default' => '@nullref/admin/generators/stuff/default',
+                    ]
+                ];
             });
         }
     }
