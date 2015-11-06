@@ -7,6 +7,7 @@ use yii\base\BootstrapInterface;
 use yii\base\Event;
 use yii\console\Application as ConsoleApplication;
 use yii\gii\Module as Gii;
+use yii\i18n\PhpMessageSource;
 use yii\web\Application as WebApplication;
 
 /**
@@ -47,6 +48,11 @@ class Bootstrap implements BootstrapInterface
             }
         });
 
+
+        $app->i18n->translations['admin*']=[
+            'class' => PhpMessageSource::className(),
+            'basePath' => '@nullref/admin/messages',
+        ];
 
         if ($app instanceof WebApplication) {
             \Yii::$app->setComponents(['admin' => [
