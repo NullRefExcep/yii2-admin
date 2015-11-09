@@ -48,11 +48,13 @@ class Bootstrap implements BootstrapInterface
             }
         });
 
-
-        $app->i18n->translations['admin*']=[
-            'class' => PhpMessageSource::className(),
-            'basePath' => '@nullref/admin/messages',
-        ];
+        /** I18n */
+        if (!isset($app->get('i18n')->translations['admin*'])) {
+            $app->i18n->translations['admin*'] = [
+                'class' => PhpMessageSource::className(),
+                'basePath' => '@nullref/admin/messages',
+            ];
+        }
 
         if ($app instanceof WebApplication) {
             \Yii::$app->setComponents(['admin' => [
