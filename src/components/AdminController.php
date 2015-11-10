@@ -17,6 +17,9 @@ class AdminController extends Controller
 {
     public function behaviors()
     {
+        /** @var Module $module */
+        $module = Yii::$app->getModule('admin');
+
         return array_merge(parent::behaviors(), [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -25,7 +28,7 @@ class AdminController extends Controller
                 ],
             ],
             'access' => [
-                'user' => 'admin',
+                'user' => $module->adminComponent,
                 'class' => AccessControl::className(),
                 'rules' => [
                     [

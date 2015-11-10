@@ -18,6 +18,8 @@ class Module extends BaseModule implements IAdminModule
 
     public $defaultRoute = 'main';
 
+    public $adminComponent = 'admin';
+
     public $adminModel = 'nullref\admin\models\Admin';
 
     public $enableRbac = false;

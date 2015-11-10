@@ -186,21 +186,21 @@ class Admin extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('admin', 'ID'),
-            'email' => Yii::t('admin', 'Email'),
-            'username' => Yii::t('admin', 'Username'),
-            'firstName' => Yii::t('admin', 'First Name'),
-            'lastName' => Yii::t('admin', 'Last Name'),
-            'status' => Yii::t('admin', 'Status'),
-            'password' => Yii::t('admin', 'Password'),
-            'passwordHash' => Yii::t('admin', 'Password Hash'),
-            'passwordResetToken' => Yii::t('admin', 'Password Reset Token'),
-            'passwordResetExpire' => Yii::t('admin', 'Password Reset Expire'),
-            'createdAt' => Yii::t('admin', 'Created At'),
-            'updatedAt' => Yii::t('admin', 'Updated At'),
-            'authKey' => Yii::t('admin', 'Auth Key'),
-            'role' => Yii::t('admin', 'Role'),
-            'emailConfirmToken' => Yii::t('admin', 'Email Confirm Token'),
+            'id' => Yii::t('user', 'ID'),
+            'email' => Yii::t('user', 'Email'),
+            'username' => Yii::t('user', 'Username'),
+            'firstName' => Yii::t('user', 'First Name'),
+            'lastName' => Yii::t('user', 'Last Name'),
+            'status' => Yii::t('user', 'Status'),
+            'password' => Yii::t('user', 'Password'),
+            'passwordHash' => Yii::t('user', 'Password Hash'),
+            'passwordResetToken' => Yii::t('user', 'Password Reset Token'),
+            'passwordResetExpire' => Yii::t('user', 'Password Reset Expire'),
+            'createdAt' => Yii::t('user', 'Created At'),
+            'updatedAt' => Yii::t('user', 'Updated At'),
+            'authKey' => Yii::t('user', 'Auth Key'),
+            'role' => Yii::t('user', 'Role'),
+            'emailConfirmToken' => Yii::t('user', 'Email Confirm Token'),
         ];
     }
 
