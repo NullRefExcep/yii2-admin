@@ -6,6 +6,8 @@ use yii\helpers\Html;
 
 /** @var $this \yii\web\View */
 /** @var $model \nullref\admin\models\LoginForm */
+
+$this->title = Yii::t('admin', 'Sign in');
 ?>
 <div class="main-login">
     <div class="container">
