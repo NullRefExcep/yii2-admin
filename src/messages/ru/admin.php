@@ -39,7 +39,7 @@ return [
     'Admins' => 'Администраторы',
     'Create' => 'Создать',
     'Create Admin' => 'Добавить Администратора',
-    'Dashboard' => 'Панель урпавления',
+    'Dashboard' => 'Панель управления',
     'Delete' => 'Удалить',
     'Incorrect username or password.' => 'Неправильный пароль',
     'Logout' => 'Выход',
