@@ -6,9 +6,8 @@ use nullref\admin\components\AdminController;
 use nullref\admin\models\Admin;
 use nullref\admin\models\LoginForm;
 use nullref\admin\models\PasswordResetForm;
-use nullref\admin\Module;
 use Yii;
-use yii\filters\AccessControl;
+use nullref\admin\components\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -19,13 +18,9 @@ class MainController extends AdminController
 {
     public function behaviors()
     {
-        /** @var Module $module */
-        $module = Yii::$app->getModule('admin');
-
         return array_merge(parent::behaviors(), [
             'access' => [
                 'class' => AccessControl::className(),
-                'user' => $module->adminComponent,
                 'only' => ['logout', 'login', 'index', 'error'],
                 'rules' => [
                     [

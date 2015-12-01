@@ -16,6 +16,8 @@ class Module extends BaseModule implements IAdminModule
 {
     public $layout = 'main';
 
+    public $errorAction = '/admin/main/error';
+
     public $defaultRoute = 'main';
 
     public $adminComponent = 'admin';

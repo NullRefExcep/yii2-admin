@@ -1,9 +1,14 @@
 <?php
 namespace nullref\admin;
 
+use nullref\admin\components\AccessControl;
 use nullref\admin\models\AdminQuery;
+use nullref\core\components\Module as BaseModule;
+use nullref\core\interfaces\IAdminController;
+use Yii;
 use yii\base\Application;
 use yii\base\BootstrapInterface;
+use yii\base\Controller;
 use yii\base\Event;
 use yii\console\Application as ConsoleApplication;
 use yii\gii\Module as Gii;
@@ -22,23 +27,22 @@ class Bootstrap implements BootstrapInterface
      */
     public function bootstrap($app)
     {
-        $module = $app->getModule('admin');
+        /** @var Module $module */
+        if ((($module = $app->getModule('admin')) == null) || !($module instanceof Module)) {
+            return;
+        };
 
         $class = 'nullref\admin\models\Admin';
 
-        $definition = $class;
-        if ($module !== null) {
-            /** @var Module $module */
-            $definition = $module->adminModel;
-            if ($module->enableRbac) {
-                $module->setComponents([
-                    'authManager' => $module->authManager,
-                    'roleContainer' => $module->roleContainer,
-                ]);
-            }
+        $definition = $module->adminModel;
+        if ($module->enableRbac) {
+            $module->setComponents([
+                'authManager' => $module->authManager,
+                'roleContainer' => $module->roleContainer,
+            ]);
         }
 
-        \Yii::$container->set($class, $definition);
+        Yii::$container->set($class, $definition);
 
         $className = is_array($definition) ? $definition['class'] : $definition;
 
@@ -57,13 +61,32 @@ class Bootstrap implements BootstrapInterface
         }
 
         if ($app instanceof WebApplication) {
-            \Yii::$app->setComponents(['admin' => [
+            Yii::$app->setComponents(['admin' => [
                 'class' => 'nullref\admin\components\User',
                 'identityClass' => $className,
                 'loginUrl' => ['admin/login'],
             ]]);
             $app->urlManager->addRules(['/admin/login' => '/admin/main/login']);
             $app->urlManager->addRules(['/admin/logout' => '/admin/main/logout']);
+
+
+            Event::on(BaseModule::className(), BaseModule::EVENT_BEFORE_ACTION, function () use ($module) {
+                if (Yii::$app->controller instanceof IAdminController) {
+                    /** @var Controller $controller */
+                    $controller = Yii::$app->controller;
+
+                    $controller->layout = $module->layout;
+                    if ($controller->module != $module) {
+                        $controller->module->setLayoutPath($module->getLayoutPath());
+                    }
+                    if (!isset($controller->behaviors()['access'])) {
+                        $controller->attachBehavior('access', AccessControl::className());
+                    }
+                    Yii::$app->errorHandler->errorAction = $module->errorAction;
+                }
+            });
+
+
         } elseif ($app instanceof ConsoleApplication) {
             if ($module !== null) {
                 /** @var Module $module */
@@ -90,6 +113,7 @@ class Bootstrap implements BootstrapInterface
                 ]);
             }
         });
+
 
         if (YII_ENV_DEV) {
             Event::on(Gii::className(), Gii::EVENT_BEFORE_ACTION, function (Event $event) {
