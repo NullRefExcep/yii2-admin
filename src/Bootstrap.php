@@ -3,7 +3,7 @@ namespace nullref\admin;
 
 use nullref\admin\components\AccessControl;
 use nullref\admin\models\AdminQuery;
-use nullref\core\components\Module as BaseModule;
+use yii\base\Module as BaseModule;
 use nullref\core\interfaces\IAdminController;
 use Yii;
 use yii\base\Application;
