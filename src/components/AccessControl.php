@@ -11,6 +11,7 @@ use Yii;
 use yii\base\ActionFilter;
 use yii\di\Instance;
 use yii\filters\AccessControl as BaseAccessControl;
+use yii\web\User;
 
 
 class AccessControl extends BaseAccessControl
