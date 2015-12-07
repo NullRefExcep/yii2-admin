@@ -43,7 +43,7 @@ use yii\filters\VerbFilter;
 /**
  * <?= $controllerClass ?> implements the CRUD actions for <?= $modelClass ?> model.
  */
-class <?= $controllerClass ?> extends <?= StringHelper::basename(\yii\web\Controller::className()) . "\n" ?>
+class <?= $controllerClass ?> extends <?= StringHelper::basename(\yii\web\Controller::className()) . "\n" ?> implements IAdminController
 {
     public function behaviors()
     {
