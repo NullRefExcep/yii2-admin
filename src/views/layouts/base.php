@@ -1,11 +1,13 @@
 <?php
 use nullref\admin\assets\AdminAsset;
+use nullref\admin\assets\MenuAsset;
 use yii\helpers\Html;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
 AdminAsset::register($this);
+MenuAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

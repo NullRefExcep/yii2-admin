@@ -1,0 +1,15 @@
+.submenu li {
+    border-bottom: 0 !important;
+}
+
+.submenu li a {
+    padding-left: 30px;
+}
+
+.submenu li .submenu li a {
+    padding-left: 50px;
+}
+
+.submenu li .submenu li .submenu li a {
+    padding-left: 70px;
+}

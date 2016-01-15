@@ -38,8 +38,10 @@ class Menu extends Widget
 
     public function run()
     {
-
-        return MetisMenu::widget(['items' => $this->items]);
+        return MetisMenu::widget([
+            'items' => $this->items,
+            'submenuTemplate' => "\n<ul class='nav submenu'>\n{items}\n</ul>\n",
+        ]);
     }
 
 } 
