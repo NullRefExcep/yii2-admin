@@ -39,11 +39,12 @@ use yii\data\ActiveDataProvider;
 use <?= ltrim(\yii\web\Controller::className(), '\\') ?>;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use nullref\core\interfaces\IAdminController;
 
 /**
  * <?= $controllerClass ?> implements the CRUD actions for <?= $modelClass ?> model.
  */
-class <?= $controllerClass ?> extends <?= StringHelper::basename(\yii\web\Controller::className()) . "\n" ?> implements IAdminController
+class <?= $controllerClass ?> extends <?= StringHelper::basename(\yii\web\Controller::className()) ?> implements IAdminController
 {
     public function behaviors()
     {
