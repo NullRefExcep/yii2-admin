@@ -48,6 +48,10 @@ public static function getAdminMenu()
    }
 ```
 
+### Admin Controller
+
+If you use `IAdminController` interface in controller, admin layout and default access rule will be set in controller before action.
+
 ### Modules system 
 
 This module integrated in system which contain other useful components. [View details](https://github.com/NullRefExcep/yii2-core)
@@ -67,7 +71,8 @@ Example:
       'main' => 'app\modules\admin\controllers\MainController',
    ],
    'components' => [  //menu builder
-      "menuBuilder" => 'app\\components\\MenuBuilder',
+      'menuBuilder' => 'app\\components\\MenuBuilder',
    ],
 ],
 ```
+
