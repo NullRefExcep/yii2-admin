@@ -17,18 +17,20 @@ abstract class MenuBuilder implements IMenuBuilder
             return [];
         }
         $result = [];
-
         foreach ($menu as $key => $item) {
-
             if (isset($item[$paramName])) {
                 if (in_array($role, $item[$paramName])) {
-                    $result[$key] = $item;
+                    if (isset($item['items'])) {
+                        $result[$key] = $item;
+                        $result[$key]['items'] = $this->filterByRole($result[$key]['items'], $role, $paramName);
+                    } else {
+                        $result[$key] = $item;
+                    }
                 }
             } else {
                 $result[$key] = $item;
             }
         }
-
         return $result;
     }
 } 
