@@ -18,7 +18,7 @@
  */
 return [
     'Are you sure you want to delete this item?' => '',
-    'Inactive' => '',
+    'Inactive' => 'Неактивный',
     'Update Admin' => '',
     'View Admin' => '',
     'Auth Key' => '',
