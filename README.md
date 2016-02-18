@@ -76,3 +76,5 @@ Example:
 ],
 ```
 
+And [translations](https://github.com/NullRefExcep/yii2-core#translation-overriding)
+
