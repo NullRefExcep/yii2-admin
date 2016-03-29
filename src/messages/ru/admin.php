@@ -17,10 +17,10 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Are you sure you want to delete this item?' => '',
+    'Are you sure you want to delete this item?' => 'Вы уверенны, что хотите удалить этот элемент?',
     'Inactive' => 'Неактивный',
-    'Update Admin' => '',
-    'View Admin' => '',
+    'Update Admin' => 'Редактировать админа',
+    'View Admin' => 'Просмотр админа',
     'Auth Key' => '',
     'Created At' => 'Добавлено',
     'Email' => '',
