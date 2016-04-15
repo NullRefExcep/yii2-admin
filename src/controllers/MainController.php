@@ -16,6 +16,8 @@ use yii\web\Response;
  */
 class MainController extends AdminController
 {
+    public $dashboardPage = ['/admin'];
+
     public function behaviors()
     {
         return array_merge(parent::behaviors(), [
@@ -63,13 +65,13 @@ class MainController extends AdminController
         $model = new LoginForm();
 
         if (!Yii::$app->get('admin')->isGuest) {
-            return $this->redirect(['/admin/main']);
+            return $this->redirect($this->dashboardPage);
         }
 
         if ($model->load(\Yii::$app->request->post())) {
             if ($model->validate()) {
                 $model->login();
-                return $this->redirect(['index']);
+                return $this->redirect($this->dashboardPage);
             } else {
                 if (Yii::$app->request->isAjax) {
                     Yii::$app->response->format = Response::FORMAT_JSON;
