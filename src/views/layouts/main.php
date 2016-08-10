@@ -1,4 +1,5 @@
 <?php
+use nullref\admin\widgets\Flash;
 use nullref\core\widgets\WidgetContainer;
 
 /* @var $this \yii\web\View */
@@ -12,6 +13,7 @@ use nullref\core\widgets\WidgetContainer;
         <?= $this->render('header') ?>
 
         <div id="page-wrapper">
+            <?= Flash::widget() ?>
             <?= $content ?>
         </div>
         <!-- /#page-wrapper -->
