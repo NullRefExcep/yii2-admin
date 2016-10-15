@@ -31,4 +31,16 @@ class Installer extends ModuleInstaller
             }
         }
     }
+
+    protected function addToConfig()
+    {
+        $path = $this->getConfigPath();
+        $config = require($path);
+
+        $config['admin'] = $this->getConfigArray();
+        $config['user'] = ['class' => 'dektrium\user\Module'];
+
+        $this->writeArrayToFile($this->getConfigPath(), $config);
+    }
+
 }

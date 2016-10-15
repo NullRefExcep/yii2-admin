@@ -89,21 +89,4 @@ class MainController extends AdminController
         return $this->goHome();
     }
 
-    public function actionReset($id, $token = false)
-    {
-        /** @var Admin $user */
-        $user = Admin::findOne($id);
-        if (($token !== false) && (isset($user)) && ($user->passwordResetToken === $token) && ($user->passwordResetExpire >= time())) {
-            $model = new PasswordResetForm();
-            if ($model->load(Yii::$app->getRequest()->post()) && $model->changePassword($user)) {
-                Yii::$app->user->login($user);
-                return $this->redirect(['index']);
-            }
-            return $this->render('password-reset', [
-                'model' => $model,
-            ]);
-        }
-        throw new NotFoundHttpException();
-    }
 }
-

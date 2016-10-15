@@ -1,5 +1,6 @@
 <?php
 
+use dektrium\user\models\User;
 use nullref\admin\models\Admin;
 use yii\db\Migration;
 use yii\db\Schema;
@@ -13,59 +14,20 @@ class m000000_000001_create_admin_table extends Migration
 
     public function up()
     {
-        if ($this->tableExist($this->tableName)) {
-            $this->stdout("Table '{$this->tableName}' already exists\n");
-            if ($this->confirm('Drop and create new?')) {
-                $this->dropTable($this->tableName);
-            } else {
-                return true;
-            }
-        }
-        /**
-         * Create table
-         */
-        $this->createTable($this->tableName, [
-            'id' => Schema::TYPE_PK,
-            'username' => Schema::TYPE_STRING . ' NOT NULL',
-            'email' => Schema::TYPE_STRING . ' NOT NULL',
-            'firstName' => Schema::TYPE_STRING . ' NULL',
-            'lastName' => Schema::TYPE_STRING . ' NULL',
-            'role' => Schema::TYPE_STRING,
-            'status' => Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT 0',
-            'passwordHash' => Schema::TYPE_STRING . ' NOT NULL',
-            'passwordResetToken' => Schema::TYPE_STRING . ' NULL DEFAULT NULL',
-            'passwordResetExpire' => Schema::TYPE_INTEGER . ' NULL DEFAULT NULL',
-            'createdAt' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'updatedAt' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'authKey' => Schema::TYPE_STRING . '(32) NULL DEFAULT NULL',
-            'emailConfirmToken' => Schema::TYPE_STRING . ' NULL DEFAULT NULL',
-            'data' => Schema::TYPE_TEXT,
-        ], $this->getTableOptions());
-
-        /**
-         * Default admin values
-         */
-        $data = [
+        $user = Yii::createObject([
+            'class'    => User::className(),
+            'scenario' => 'create',
+            'email'    => 'admin@test.com',
             'username' => 'admin',
-            'email' => 'admin@test.com',
-            'passwordHash' => \Yii::$app->security->generatePasswordHash('password'),
-            'firstName' => 'Admin',
-            'lastName' => 'Admin',
-            'createdAt' => time(),
-            'updatedAt' => time(),
-            'status' => Admin::STATUS_ACTIVE,
-        ];
+            'password' => 'password',
+        ]);
 
-        /** @var BaseManager $authManager */
-        $authManager = \Yii::$app->getModule('admin')->get('authManager', false);
-        $hasRbac = (($authManager !== null) && ($role = $authManager->getRole('admin')) !== null);
-
-        if ($hasRbac) {
-            $data['role'] = 'admin';
+        if ($user->create()) {
+            $this->stdout(Yii::t('user', 'User has been created') . "!\n", Console::FG_GREEN);
         }
 
         $this->stdout("New user was added:\n");
-        $this->stdout("Username: '{$data['username']}'\n");
+        $this->stdout("Username: 'admin'\n");
         $this->stdout("Password: 'password'\n");
 
         /**
