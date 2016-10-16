@@ -6,6 +6,7 @@ use nullref\core\interfaces\IAdminModule;
 use nullref\sbadmin\widgets\MetisMenu;
 use Yii;
 use yii\base\Widget;
+use yii\helpers\ArrayHelper;
 
 /**
  * @author    Dmytro Karpovych
@@ -30,6 +31,9 @@ class Menu extends Widget
                 }
             }
         }
+
+        ArrayHelper::multisort($this->items, 'order');
+
         /** @var $builder IMenuBuilder */
         if (($builder = Yii::$app->getModule('admin')->get('menuBuilder', false)) !== null) {
             $this->items = $builder->build($this->items);
