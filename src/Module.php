@@ -52,6 +52,7 @@ class Module extends BaseModule implements IAdminModule
     public function init()
     {
         parent::init();
+        $this->addOverrideViewPath();
         $this->setLayoutPath('@vendor/nullref/yii2-admin/src/views/layouts');
         if ((($builder = $this->get('menuBuilder', false)) !== null) && (!($builder instanceof IMenuBuilder))) {
             throw new InvalidConfigException('Menu builder must implement IMenuBuilder interface');
