@@ -71,7 +71,7 @@ class MainController extends AdminController
         if ($model->load(\Yii::$app->request->post())) {
             if ($model->validate()) {
                 $model->login();
-                return $this->redirect($this->dashboardPage);
+                return $this->redirect(Yii::$app->user->getReturnUrl($this->dashboardPage));
             } else {
                 if (Yii::$app->request->isAjax) {
                     Yii::$app->response->format = Response::FORMAT_JSON;
