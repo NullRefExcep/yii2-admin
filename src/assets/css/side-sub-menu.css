@@ -39,9 +39,13 @@
     padding-left: 15px;
 }
 
-.sidebar .menu-button {
-    width: 70px;
+.sidebar .menu-button {    
     float: right;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid #e7e7e7;
+    width: 100%;
 }
 
 .sidebar.closed .menu-button .close-arrow {
