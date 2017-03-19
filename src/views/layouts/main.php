@@ -12,7 +12,7 @@ use nullref\core\widgets\WidgetContainer;
 
         <?= $this->render('header') ?>
 
-        <div id="page-wrapper">
+        <div id="page-wrapper" class="maximized">
             <?= Flash::widget() ?>
             <?= $content ?>
         </div>
