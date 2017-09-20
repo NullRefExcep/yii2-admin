@@ -4,6 +4,8 @@ Yii2 Admin
 
 Module for administration
 
+Check extended version of this module at [this link](https://github.com/NullRefExcep/yii2-full-admin)
+
 Installation
 ------------
 
