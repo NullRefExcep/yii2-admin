@@ -11,6 +11,14 @@ use nullref\admin\interfaces\IMenuBuilder;
 
 abstract class MenuBuilder implements IMenuBuilder
 {
+    /**
+     * Filter menu items by specified roles
+     *
+     * @param $menu
+     * @param $role
+     * @param string $paramName
+     * @return array
+     */
     public function filterByRole($menu, $role, $paramName = 'roles')
     {
         if ($role === null) {
@@ -19,7 +27,8 @@ abstract class MenuBuilder implements IMenuBuilder
         $result = [];
         foreach ($menu as $key => $item) {
             if (isset($item[$paramName])) {
-                if (in_array($role, $item[$paramName])) {
+                if (is_array($role) && count(array_intersect($role, $item[$paramName]))
+                    || in_array($role, $item[$paramName])) {
                     if (isset($item['items'])) {
                         $result[$key] = $item;
                         $result[$key]['items'] = $this->filterByRole($result[$key]['items'], $role, $paramName);
