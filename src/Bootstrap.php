@@ -24,6 +24,7 @@ class Bootstrap implements BootstrapInterface
     /**
      * Bootstrap method to be called during application bootstrap stage.
      * @param Application $app the application currently running
+     * @throws \yii\base\InvalidConfigException
      */
     public function bootstrap($app)
     {
@@ -80,7 +81,7 @@ class Bootstrap implements BootstrapInterface
                         $controller->module->setLayoutPath($module->getLayoutPath());
                     }
                     if (!isset($controller->behaviors()['access'])) {
-                        $controller->attachBehavior('access', AccessControl::className());
+                        $controller->attachBehavior('access', $module->accessControl);
                     }
                     Yii::$app->errorHandler->errorAction = $module->errorAction;
                 }

@@ -2,6 +2,7 @@
 
 namespace nullref\admin;
 
+use nullref\admin\components\AccessControl;
 use nullref\admin\interfaces\IMenuBuilder;
 use nullref\core\components\Module as BaseModule;
 use nullref\core\interfaces\IAdminModule;
@@ -28,6 +29,8 @@ class Module extends BaseModule implements IAdminModule
 
     public $globalWidgets = [];
 
+    public $accessControl;
+
     /** @var array */
     public $authManager = [
         'class' => 'yii\rbac\PhpManager',
@@ -49,6 +52,9 @@ class Module extends BaseModule implements IAdminModule
         ];
     }
 
+    /**
+     * @throws InvalidConfigException
+     */
     public function init()
     {
         parent::init();
@@ -56,6 +62,9 @@ class Module extends BaseModule implements IAdminModule
         $this->setLayoutPath('@vendor/nullref/yii2-admin/src/views/layouts');
         if ((($builder = $this->get('menuBuilder', false)) !== null) && (!($builder instanceof IMenuBuilder))) {
             throw new InvalidConfigException('Menu builder must implement IMenuBuilder interface');
+        }
+        if ($this->accessControl === null) {
+            $this->accessControl = AccessControl::className();
         }
         //@TODO add checking $globalWidgets
     }
