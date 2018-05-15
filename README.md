@@ -32,6 +32,11 @@ php yii module/install admin
 php yii modules-migrate
 ```
 
+Pay attention that if you don't use our [application template](https://github.com/NullRefExcep/yii2-boilerplate) 
+it needs to change config files structure to have ability run commands that show above.
+
+Please check this [documentation section](https://github.com/NullRefExcep/yii2-core#config-structure)
+
 ### Admin Menu
 
 For adding items to admin menu you have to implement IAdminModule interface, e.g.:
