@@ -28,7 +28,7 @@ to the require section of your `composer.json` file.
 Then You have run console command for install this module and run migrations:
 
 ```
-php yii module/install admin
+php yii module/install nullref/yii2-admin
 php yii modules-migrate
 ```
 
