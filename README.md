@@ -28,9 +28,14 @@ to the require section of your `composer.json` file.
 Then You have run console command for install this module and run migrations:
 
 ```
-php yii module/install admin
+php yii module/install nullref/yii2-admin
 php yii modules-migrate
 ```
+
+Pay attention that if you don't use our [application template](https://github.com/NullRefExcep/yii2-boilerplate) 
+it needs to change config files structure to have ability run commands that show above.
+
+Please check this [documentation section](https://github.com/NullRefExcep/yii2-core#config-structure)
 
 ### Admin Menu
 
