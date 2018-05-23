@@ -4,11 +4,11 @@
     "license": "MIT",
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.4.0",
-        "yiisoft/yii2": ">=2.0.4",
-        "nullref/yii2-useful": "dev-master",
-        "nullref/yii2-sb-admin-2": "dev-master",
-        "nullref/yii2-core": "dev-master"
+        "php": ">=5.5.0",
+        "yiisoft/yii2": ">=2.0.13",
+        "nullref/yii2-useful": ">=0.0.4",
+        "nullref/yii2-sb-admin-2": ">=0.0.2",
+        "nullref/yii2-core": ">=0.0.3"
     },
     "require-dev": {
         "yiisoft/yii2-gii": "*"
