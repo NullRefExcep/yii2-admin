@@ -18,6 +18,12 @@
             "nullref\\admin\\": "src/"
         }
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
     "extra": {
         "bootstrap":"nullref\\admin\\Bootstrap"
     }
