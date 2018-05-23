@@ -6,6 +6,7 @@ use nullref\admin\components\AccessControl;
 use nullref\admin\interfaces\IMenuBuilder;
 use nullref\core\components\Module as BaseModule;
 use nullref\core\interfaces\IAdminModule;
+use nullref\core\interfaces\IHasMigrateNamespace;
 use Yii;
 use yii\base\InvalidConfigException;
 
@@ -13,7 +14,7 @@ use yii\base\InvalidConfigException;
  * @author    Dmytro Karpovych
  * @copyright 2015 NRE
  */
-class Module extends BaseModule implements IAdminModule
+class Module extends BaseModule implements IAdminModule, IHasMigrateNamespace
 {
     public $layout = 'main';
 
@@ -39,10 +40,16 @@ class Module extends BaseModule implements IAdminModule
         'ruleFile' => '@app/rbac/admin_rules.php',
     ];
 
+    /**
+     * @var array
+     */
     public $roleContainer = [
         'class' => 'nullref\admin\components\RoleContainer',
     ];
 
+    /**
+     * @return array
+     */
     public static function getAdminMenu()
     {
         return [
@@ -67,6 +74,17 @@ class Module extends BaseModule implements IAdminModule
             $this->accessControl = AccessControl::className();
         }
         //@TODO add checking $globalWidgets
+    }
+
+    /**
+     * Return path to folder with migration with namespaces
+     *
+     * @param $defaults
+     * @return array
+     */
+    public function getMigrationNamespaces($defaults)
+    {
+        return ['nullref\admin\migration_ns'];
     }
 
 }

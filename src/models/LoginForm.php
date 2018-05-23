@@ -7,19 +7,20 @@
 
 namespace nullref\admin\models;
 
-use nullref\admin\Module;
+use nullref\admin\traits\HasModule;
 use Yii;
 use yii\base\Model;
 
 class LoginForm extends Model
 {
+    use HasModule;
 
     public $username;
     public $password;
     public $rememberMe = true;
 
-    private $_user = false;
-
+    /** @var bool|Admin|null */
+    protected $_user = false;
 
     /**
      * @return array the validation rules.
@@ -32,6 +33,7 @@ class LoginForm extends Model
             ['password', 'validatePassword'],
         ];
     }
+
 
     /**
      * Validates the password.
@@ -52,27 +54,13 @@ class LoginForm extends Model
     }
 
     /**
-     * Logs in a user using the provided username and password.
-     * @return boolean whether the user is logged in successfully
-     */
-    public function login()
-    {
-        if ($this->validate()) {
-            return Yii::$app->admin->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 * 3 : 0);
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * Finds user by [[username]]
      *
      * @return Admin|null
      */
     public function getUser()
     {
-        /** @var Module $module */
-        $module = Yii::$app->getModule('admin');
+        $module = $this->getModule();
         $class = $module->adminModel;
         if ($this->_user === false) {
             $user = call_user_func(array($class, 'findByUsername'), [$this->username]);
@@ -83,6 +71,22 @@ class LoginForm extends Model
         return $this->_user;
     }
 
+    /**
+     * Logs in a user using the provided username and password.
+     * @return boolean whether the user is logged in successfully
+     */
+    public function login()
+    {
+        if ($this->validate()) {
+            return Yii::$app->get($this->getModule()->adminComponent)->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 * 3 : 0);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @return array
+     */
     public function attributeLabels()
     {
         return [

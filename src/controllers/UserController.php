@@ -15,6 +15,7 @@ class UserController extends AdminController
 {
     /**
      * Lists all Admin models.
+     *
      * @return mixed
      */
     public function actionIndex()
@@ -30,8 +31,10 @@ class UserController extends AdminController
 
     /**
      * Displays a single Admin model.
-     * @param integer $id
-     * @return mixed
+     *
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
      */
     public function actionView($id)
     {
@@ -43,7 +46,9 @@ class UserController extends AdminController
     /**
      * Creates a new Admin model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     *
+     * @return string|\yii\web\Response
+     * @throws \yii\base\InvalidConfigException
      */
     public function actionCreate()
     {
@@ -63,8 +68,10 @@ class UserController extends AdminController
     /**
      * Updates an existing Admin model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
+     *
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
      */
     public function actionUpdate($id)
     {
@@ -82,8 +89,12 @@ class UserController extends AdminController
     /**
      * Deletes an existing Admin model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
+     *
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Exception
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
@@ -95,6 +106,7 @@ class UserController extends AdminController
     /**
      * Finds the Admin model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
      * @return Admin the loaded model
      * @throws NotFoundHttpException if the model cannot be found
