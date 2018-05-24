@@ -15,7 +15,7 @@ trait HasModule
      */
     public function getModule()
     {
-        return Yii::$app->getModule('admin');
+        return \Yii::$app->getModule('admin');
     }
 
 }
