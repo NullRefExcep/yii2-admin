@@ -13,4 +13,9 @@ class MenuAsset extends AssetBundle
     public $js = [
         'js/submenu.js'
     ];
+
+    public $depends = [
+        'nullref\core\assets\ToolsAsset',
+    ];
+
 }
