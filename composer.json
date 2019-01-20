@@ -8,7 +8,7 @@
         "yiisoft/yii2": ">=2.0.13",
         "nullref/yii2-useful": ">=0.0.4",
         "nullref/yii2-sb-admin-2": ">=0.0.2",
-        "nullref/yii2-core": ">=0.0.3"
+        "nullref/yii2-core": ">=0.0.4"
     },
     "require-dev": {
         "yiisoft/yii2-gii": "*"
